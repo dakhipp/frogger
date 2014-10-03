@@ -5,9 +5,9 @@ import java.awt.event.*;
 import javax.swing.*; 
 
 public class Board extends JPanel implements ActionListener{
-Frog f;
-Image img;
-Timer time;
+	Frog f;
+	Image img;
+	Timer time;
 
 	public Board() {
 		f = new Frog();
@@ -35,9 +35,6 @@ Timer time;
 	private class AL extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
 			f.keyReleased(e);
-		}
-		public void keyPressed(KeyEvent e) {
-			f.keyPressed(e);
 		}
 	}
 }

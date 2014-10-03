@@ -17,61 +17,43 @@ public class Frog {
 	}
 	
 	public void move() {
-		if(dx != 0 ) {
+		if(dx != 0) {
 			x = x + dx;
+			dx = 0;
 		}
 		if(dy != 0) {
 			y = y + dy;
+			dy = 0;
 		}
 	}
+	
 	public int getX() {
 		return x;
 	}
+	
 	public int getY() {
 		return y;
 	}
+	
 	public Image getImage() {
 		return frogImg;
 	}
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-		
-		if(key == KeyEvent.VK_LEFT) {
-			dx = -1;
-		}
-		if(key == KeyEvent.VK_RIGHT) {
-			dx = 1;
-		}
-		if(key == KeyEvent.VK_DOWN) {
-			dy = 1;
-		}
-		if(key == KeyEvent.VK_UP) {
-			dy = -1;
-		}
-	}
+	
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		
-		if(key == KeyEvent.VK_LEFT) {
-			dx = 0;
+		if(key == KeyEvent.VK_LEFT && x > 18) {
+			dx = -47;
 		}
-		if(key == KeyEvent.VK_RIGHT) {
-			dx = 0;
+		if(key == KeyEvent.VK_RIGHT && x < 582) {
+			dx = 47;
 		}
-		if(key == KeyEvent.VK_DOWN) {
-			dy = 0;
+		if(key == KeyEvent.VK_DOWN && y < 612) {
+			dy = 47;
 		}
 		if(key == KeyEvent.VK_UP) {
-			dy = 0;
+			dy = -47;
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
