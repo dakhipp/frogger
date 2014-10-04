@@ -9,7 +9,6 @@ public class Frame {
 		frame.setResizable(false);
 		frame.setSize(650, 672);
 		frame.setVisible(true);
-		
 	}
 
 }

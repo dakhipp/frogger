@@ -8,6 +8,7 @@ public class Board extends JPanel implements ActionListener{
 	Frog f;
 	Image img;
 	Timer time;
+	CarManager carManager = new CarManager(15,10);
 
 	public Board() {
 		f = new Frog();
@@ -17,6 +18,7 @@ public class Board extends JPanel implements ActionListener{
 		img = i.getImage();
 		time = new Timer(5, this);
 		time.start();
+
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -25,11 +27,14 @@ public class Board extends JPanel implements ActionListener{
 	}
 	
 	public void paint(Graphics g) {
-		super.paint(g);
-			Graphics2D g2d = (Graphics2D) g;
-			
-			g2d.drawImage(img, 0, 0, null);
-			g2d.drawImage(f.getImage(), f.getX(), f.getY(), null);
+		
+		Graphics2D g2d = (Graphics2D) g;
+
+		g2d.drawImage(img, 0, 0, null);
+		g2d.drawImage(f.getImage(), f.getX(), f.getY(), null);
+		carManager.paint(g);
+		
+		repaint();
 	}
 
 	private class AL extends KeyAdapter {
