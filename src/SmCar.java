@@ -13,8 +13,9 @@ public class SmCar extends Car {
 	};
 	
 	public SmCar() {
-		speed = super.speed*2;
-		carImg = super.randomImg(possibleImages);
+		img = super.randomImg(possibleImages);
+		width = img.getWidth(null);
+		height = img.getHeight(null);
 	}
 
 }

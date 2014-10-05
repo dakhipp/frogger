@@ -24,10 +24,13 @@ public class LgCar extends Car {
 	public LgCar() {
 		
 		if(getX() > 0) {
-			carImg = super.randomImg(possibleImagesLeft);
+			img = super.randomImg(possibleImagesLeft);
 		} else {
-			carImg = super.randomImg(possibleImagesRight);
+			img = super.randomImg(possibleImagesRight);
 		}
+		width = img.getWidth(null);
+		height = img.getHeight(null);
+		
 	}
 	
 

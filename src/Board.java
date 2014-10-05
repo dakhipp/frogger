@@ -9,6 +9,7 @@ public class Board extends JPanel implements ActionListener{
 	Image img;
 	Timer time;
 	CarManager carManager = new CarManager(15,10);
+	LogManager logManager = new LogManager(10);
 
 	public Board() {
 		f = new Frog();
@@ -33,6 +34,7 @@ public class Board extends JPanel implements ActionListener{
 		g2d.drawImage(img, 0, 0, null);
 		g2d.drawImage(f.getImage(), f.getX(), f.getY(), null);
 		carManager.paint(g);
+		logManager.paint(g);
 		
 		repaint();
 	}

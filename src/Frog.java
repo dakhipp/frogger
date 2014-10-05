@@ -6,14 +6,16 @@ import javax.swing.ImageIcon;
 
 public class Frog {
 	
-	int x, dx, y, dy;
-	Image frogImg;
+	protected int x, dx, y, dy, width, height;
+	protected Image frogImg;
 	
 	public Frog() {
 		ImageIcon i = new ImageIcon("images/frog.png");
 		frogImg = i.getImage();
 		x = 300;
 		y = 612;
+		width = frogImg.getWidth(null);
+		height = frogImg.getHeight(null);
 	}
 	
 	public void move() {

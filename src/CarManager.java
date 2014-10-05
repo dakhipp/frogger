@@ -2,7 +2,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class CarManager {
 
 	private int smAmmount;
@@ -13,8 +12,10 @@ public class CarManager {
 	public CarManager(int a, int b) {
 		this.smAmmount = a;
 		this.lgAmmount = b;
+
 		spawnSm();
 		spawnLg();
+	
 	}
 	
 	private void spawnSm() {
