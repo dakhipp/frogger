@@ -53,7 +53,7 @@ public class Frog {
 		if(key == KeyEvent.VK_DOWN && y < 612) {
 			dy = 47;
 		}
-		if(key == KeyEvent.VK_UP) {
+		if(key == KeyEvent.VK_UP && y > 50) {
 			dy = -47;
 		}
 	}

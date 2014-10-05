@@ -5,13 +5,13 @@ import javax.swing.ImageIcon;
 
 public class Fly extends Entity {
 
-	private int [] possibleYs = {565, 518, 471, 424, 330, 283, 189, 142, 95};
+	private int [] possibleYs = {518, 471};//, 424, 330, 283, 189, 142, 95};
 	
 	public Fly() {
 		ImageIcon i = new ImageIcon("images/Butterfly.png");
 		img = i.getImage();
 		x = getRandX();
-		y = getRandY(possibleYs);
+		y = getRandomY(possibleYs);
 		width = img.getWidth(null);
 		height = img.getHeight(null);
 	}
@@ -23,7 +23,7 @@ public class Fly extends Entity {
 		return randomX;
 	}
 	
-	private int getRandY(int possibleYs []) {
+	private int getRandomY(int possibleYs []) {
 		Random random = new Random();
 		int randomInt = random.nextInt(possibleYs.length);
 		return possibleYs[randomInt];

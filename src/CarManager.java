@@ -4,14 +4,14 @@ import java.util.List;
 
 public class CarManager {
 
-	private int smAmmount;
-	private int lgAmmount;
+	private int smAmount;
+	private int lgAmount;
 	private List<SmCar> smCars = new ArrayList<SmCar>();
 	private List<LgCar> lgCars = new ArrayList<LgCar>();
 	
 	public CarManager(int a, int b) {
-		this.smAmmount = a;
-		this.lgAmmount = b;
+		this.smAmount = a;
+		this.lgAmount = b;
 
 		spawnSm();
 		spawnLg();
@@ -20,12 +20,12 @@ public class CarManager {
 	
 	private void spawnSm() {
 		int size = smCars.size();
-		if(size < smAmmount) {
-			for(int i = 0; i < smAmmount - size; i++) {
+		if(size < smAmount) {
+			for(int i = 0; i < smAmount - size; i++) {
 				smCars.add(new SmCar());
 			}
-		} else if ( size > smAmmount) {
-			for(int i = 0; i < size - smAmmount; i++) {
+		} else if ( size > smAmount) {
+			for(int i = 0; i < size - smAmount; i++) {
 				smCars.get(0);
 			}
 		}
@@ -33,12 +33,12 @@ public class CarManager {
 	
 	private void spawnLg() {
 		int size = lgCars.size();
-		if(size < lgAmmount) {
-			for(int i = 0; i < lgAmmount - size; i++) {
+		if(size < lgAmount) {
+			for(int i = 0; i < lgAmount - size; i++) {
 				lgCars.add(new LgCar());
 			}
-		} else if ( size > lgAmmount) {
-			for(int i = 0; i < size - lgAmmount; i++) {
+		} else if ( size > lgAmount) {
+			for(int i = 0; i < size - lgAmount; i++) {
 				lgCars.get(0);
 			}
 		}

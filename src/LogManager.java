@@ -2,14 +2,13 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class LogManager {
 
-	private int logAmmount;
+	private int logAmount;
 	private List<Log> logs = new ArrayList<Log>();
 	
 	public LogManager(int a) {
-		this.logAmmount = a;
+		this.logAmount = a;
 
 		spawnLog();
 		
@@ -17,12 +16,12 @@ public class LogManager {
 
 	private void spawnLog() {
 		int size = logs.size();
-		if(size < logAmmount) {
-			for(int i = 0; i < logAmmount - size; i++) {
+		if(size < logAmount) {
+			for(int i = 0; i < logAmount - size; i++) {
 				logs.add(new Log());
 			}
-		} else if ( size > logAmmount) {
-			for(int i = 0; i < size - logAmmount; i++) {
+		} else if ( size > logAmount) {
+			for(int i = 0; i < size - logAmount; i++) {
 				logs.get(0);
 			}
 		}
