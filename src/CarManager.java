@@ -6,8 +6,8 @@ public class CarManager {
 
 	private int smAmount;
 	private int lgAmount;
-	private List<SmCar> smCars = new ArrayList<SmCar>();
-	private List<LgCar> lgCars = new ArrayList<LgCar>();
+	public List<SmCar> smCars = new ArrayList<SmCar>();
+	public List<LgCar> lgCars = new ArrayList<LgCar>();
 	
 	public CarManager(int a, int b) {
 		this.smAmount = a;
@@ -76,6 +76,14 @@ public class CarManager {
 		
 		if(re) spawnLg();
 		
+	}
+	
+	public int smSize() {
+		return smCars.size();
+	}
+	
+	public int lgSize() {
+		return lgCars.size();
 	}
 
 }

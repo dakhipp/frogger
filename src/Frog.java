@@ -1,4 +1,7 @@
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
@@ -8,6 +11,7 @@ public class Frog {
 	
 	protected int x, dx, y, dy, width, height;
 	protected Image frogImg;
+	protected Rectangle rect;
 	
 	public Frog() {
 		ImageIcon i = new ImageIcon("images/frog.png");
@@ -16,6 +20,17 @@ public class Frog {
 		y = 612;
 		width = frogImg.getWidth(null);
 		height = frogImg.getHeight(null);
+		rect = new Rectangle(x, y, width, height);
+	}
+	
+	public void paint(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.drawImage(frogImg, x, y, null);
+	}
+	
+	public void moveWithLog(int logSpeed) {
+		dx = logSpeed;
+		x = x + dx;
 	}
 	
 	public void move() {
@@ -56,6 +71,10 @@ public class Frog {
 		if(key == KeyEvent.VK_UP && y > 50) {
 			dy = -47;
 		}
+	}
+
+	public boolean intersects(Rectangle r) {
+		return rect.intersects(r);
 	}
 
 }

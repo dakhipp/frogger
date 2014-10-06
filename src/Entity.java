@@ -1,14 +1,20 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 
 public class Entity {
 	
 	protected int x, y, width, height;
 	protected Image img;
+	public Rectangle rect = new Rectangle(x, y, width, height);
 	
 	public Entity() {
 	
+	}
+	
+	public Rectangle getRect() {
+		return rect;
 	}
 	
 	public void paint(Graphics g) {

@@ -5,7 +5,7 @@ import java.util.List;
 public class LogManager {
 
 	private int logAmount;
-	private List<Log> logs = new ArrayList<Log>();
+	public List<Log> logs = new ArrayList<Log>();
 	
 	public LogManager(int a) {
 		this.logAmount = a;
@@ -44,6 +44,10 @@ public class LogManager {
 		updateLogs();
 		
 		for(Log log : logs) log.paint(g);
+	}
+	
+	public int logSize() {
+		return logs.size();
 	}
 	
 }

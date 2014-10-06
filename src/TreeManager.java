@@ -5,7 +5,7 @@ import java.util.List;
 public class TreeManager {
 
 	private int treeAmount;
-	private List<Tree> trees = new ArrayList<Tree>();
+	public List<Tree> trees = new ArrayList<Tree>();
 	
 	public TreeManager(int a) {
 		this.treeAmount = a;
@@ -26,18 +26,12 @@ public class TreeManager {
 		}
 	}
 	
-//	private void updateTrees() {
-//		for(int i = 0; i < trees.size(); i++) {
-//			if(player.won()) {
-//				trees.remove(i);
-//			}
-//		}
-//	}
-	
 	public void paint(Graphics g) {
-		//updateTrees();
-		
 		for(Tree tree : trees) tree.paint(g);
+	}
+	
+	public int treeSize() {
+		return trees.size();
 	}
 	
 }
