@@ -1,3 +1,5 @@
+import java.awt.Rectangle;
+
 import javax.swing.ImageIcon;
 
 
@@ -14,6 +16,15 @@ public class Log extends MovingEntity {
 		speed = 1;
 		isDead = false;
 	}	
+	
+	public void move() {
+		if(startingX >= 0) {
+			x = x - speed;
+		} else {
+			x = x + speed;
+		}
+		rect = new Rectangle(x, y, width, height);
+	}
 	
 	private int yValue(int x) {
 		int yVal;

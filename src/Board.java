@@ -5,105 +5,151 @@ import java.awt.event.*;
 
 import javax.swing.*; 
 
-import java.awt.Rectangle;
-
 public class Board extends JPanel implements ActionListener{
+	
+	private enum STATE {
+		MENU, 
+		PLAY,
+		SCORES
+	};
+	private STATE State = STATE.PLAY;
+	
+	Menu menu = new Menu();
 	Timer time;
 	Image img;
 	Player player = new Player();
-	CarManager carManager = new CarManager(15,10);
+	SmCarManager smCarManager = new SmCarManager(10);
+	LgCarManager lgCarManager = new LgCarManager(15);
 	RiverRect river = new RiverRect(18,90);
 	LogManager logManager = new LogManager(10);
 	WinningRect winningBank = new WinningRect(18, 40);
 	Fly fly = new Fly();
 	TreeManager treeManager = new TreeManager(5);
 	Frog f = new Frog();
+	MenuFrog frog = new MenuFrog();
 	
 	public Board() {
 		addKeyListener(new AL());
 		setFocusable(true);
-		ImageIcon i = new ImageIcon("images/background.png");
-		img = i.getImage();
-		time = new Timer(100, this);
+		
+		if(State == STATE.PLAY) {
+			ImageIcon i = new ImageIcon("images/background.png");
+			img = i.getImage();
+		} 
+		
+		time = new Timer(5, this);
 		time.start();
-		frogCollisions();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		f.move();
+		frog.move();
 		repaint();
 	}
 	
 	public void paint(Graphics g) {
 		
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.drawImage(img, 0, 0, null);
+		if(State == STATE.PLAY) {
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.drawImage(img, 0, 0, null);
+			logManager.paint(g);
+			fly.paint(g);
+			winningBank.paint(g);
+			treeManager.paint(g);
+			f.paint(g);
+			river.paint(g);
+			smCarManager.paint(g);
+			lgCarManager.paint(g);
+			
+			frogCollisions();
+			
+			repaint();
+		} else if(State == STATE.MENU) {
+			
+			menu.render(g);
+			frog.paint(g);
+			
+			
+		}
 		
-		logManager.paint(g);
-		fly.paint(g);
-		winningBank.paint(g);
-		treeManager.paint(g);
-		f.paint(g);
-		river.paint(g);
-		carManager.paint(g);
 		
-		repaint();
 	}
 
 	private class AL extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
 			f.keyReleased(e);
+			frog.keyReleased(e);
 			player.increaseHop();
 		}
 	}
 	
 	public void frogCollisions() {
 		
-		for(int i = 0; i < carManager.smSize(); i++) {
-			if(f.intersects(carManager.smCars.get(i).getRect())){
-				player.decreaseLives();
-				System.out.println(player.getLives());
-				checkGameOver(); // NEED TO IMPLEMENT STILL
+		for(int i = 0; i < smCarManager.size(); i++) {
+			if(f.intersects(smCarManager.smCars.get(i).getRect())){
+				badHit();
 			}
 		}
 		
-		for(int i = 0; i < carManager.lgSize(); i++) {
-			if(f.intersects(carManager.lgCars.get(i).getRect())){
-				player.decreaseLives();
-				checkGameOver(); // NEED TO IMPLEMENT STILL
+		for(int i = 0; i < lgCarManager.size(); i++) {
+			if(f.intersects(lgCarManager.lgCars.get(i).getRect())){
+				badHit();
 			}
 		}
 		
 		for(int i = 0; i < treeManager.treeSize(); i++) {
 			if(f.intersects(treeManager.trees.get(i).getRect())){
-				player.decreaseLives();
-				checkGameOver(); // NEED TO IMPLEMENT STILL
+				badHit();
+				treeManager.trees.get(i).destroy();
 			}
 		}
 		
 		for(int i = 0; i < logManager.logSize(); i++) {
 			if(f.intersects(logManager.logs.get(i).getRect())){
-				f.moveWithLog(logManager.logs.get(i).speed);
+				while(f.intersects(logManager.logs.get(i).getRect())){
+					f.moveWithLog(logManager.logs.get(i).speed);
+				}
 			}
 		}
 		
 		if(f.intersects(fly.getRect())) {
-			player.increaseLives();
-			System.out.println(player.getLives());
+			caughtFly();
 		} else if(f.intersects(river.getRect())) {
-			player.decreaseLives();
-			checkGameOver(); // NEED TO IMPLEMENT STILL
+			badHit();
 		} else if (f.intersects(winningBank.getRect())) {
-			player.increaseLevel();
-			player.incraseScoreLevel();
+			winLevel();
 		} 	
 	}
 	
+	public void caughtFly() {
+		player.increaseLives();
+		player.incraseScoreLevel();
+		fly.destroy();
+		System.out.println("Lives: " + player.getLives());
+		System.out.println("Score: " + player.getScore());
+	}
+	
+	public void winLevel() {
+		player.increaseLevel();
+		player.incraseScoreLevel();
+		f.resetFrog();
+		System.out.println("Level: " + player.getLevel());
+		System.out.println("Score: " + player.getScore());
+	}
+	
+	public void badHit() {
+		player.decreaseLives();
+		System.out.println("Lives: " + player.getLives());
+		f.resetFrog();
+		checkGameOver(); 
+	}
+	
 	public void checkGameOver() {
-		if(player.getLives() > 0) {
+		if(player.getLives() < 0) {
 			// show high scores
 			// update high scores if needed
 			// go to main menu
+			System.out.println("Game Over!");
 		}
 	}
 	

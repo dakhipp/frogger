@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.Random;
 
 public class MovingEntity extends Entity {
@@ -31,7 +32,7 @@ public class MovingEntity extends Entity {
 		} else {
 			x = x + speed;
 		}
-		
+		rect = new Rectangle(x, y, width, height);
 	}
 	
 	public void offScreenKill() {

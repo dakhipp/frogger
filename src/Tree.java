@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -12,6 +13,11 @@ public class Tree extends Entity {
 		img = i.getImage();
 		width = img.getWidth(null);
 		height = img.getHeight(null);
+		rect = new Rectangle(x, y, width, height);
+	}
+	
+	public void destroy() {
+		rect = new Rectangle(0, 0, 0, 0);
 	}
 	
 	private int getRandX() {

@@ -20,12 +20,21 @@ public class Frog {
 		y = 612;
 		width = frogImg.getWidth(null);
 		height = frogImg.getHeight(null);
-		rect = new Rectangle(x, y, width, height);
+	}
+	
+	public void resetFrog() {
+		ImageIcon i = new ImageIcon("images/frog.png");
+		frogImg = i.getImage();
+		x = 300;
+		y = 612;
+		width = frogImg.getWidth(null);
+		height = frogImg.getHeight(null);
 	}
 	
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(frogImg, x, y, null);
+		rect = new Rectangle(x, y, width, height);
 	}
 	
 	public void moveWithLog(int logSpeed) {
@@ -42,6 +51,14 @@ public class Frog {
 			y = y + dy;
 			dy = 0;
 		}
+	}
+	
+	public void setX(int xVal) {
+		x = xVal;
+	}
+	
+	public void setY(int yVal) {
+		x = yVal;
 	}
 	
 	public int getX() {
@@ -73,6 +90,10 @@ public class Frog {
 		}
 	}
 
+	public Rectangle getRect() {
+		return rect;
+	}
+	
 	public boolean intersects(Rectangle r) {
 		return rect.intersects(r);
 	}

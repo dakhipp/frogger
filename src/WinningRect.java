@@ -1,4 +1,4 @@
-import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class WinningRect extends Entity {
 
@@ -7,10 +7,12 @@ public class WinningRect extends Entity {
 		y = yVal;
 		width = 610;
 		height = 40;
+		rect = new Rectangle(x, y, width, height);
 	}
 	
-	 public void paint(Graphics g) {
-	    g.drawRect (x, y, width, height);  
-	 }
+//   COMMENTED FOR DEBUGGEING IF NEEDED	
+//	 public void paint(Graphics g) {
+//	    g.drawRect (x, y, width, height);  
+//	 }
 
 }

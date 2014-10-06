@@ -4,10 +4,18 @@ public class Player {
 	
 	public Player() {
 		score = 0;
-		level = 0;
+		level = 1;
 		lives = 3;
 		hops = 0;
 		flysCaught = 0;
+	}
+	
+	public int getLevel() {
+		return level;
+	}
+	
+	public int getScore() {
+		return score;
 	}
 	
 	public void increaseLevel() {

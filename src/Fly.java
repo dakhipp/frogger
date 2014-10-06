@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -6,6 +7,7 @@ import javax.swing.ImageIcon;
 public class Fly extends Entity {
 
 	private int [] possibleYs = {518, 471};//, 424, 330, 283, 189, 142, 95};
+	public Rectangle rect = new Rectangle();
 	
 	public Fly() {
 		ImageIcon i = new ImageIcon("images/Butterfly.png");
@@ -14,6 +16,16 @@ public class Fly extends Entity {
 		y = getRandomY(possibleYs);
 		width = img.getWidth(null);
 		height = img.getHeight(null);
+		rect = new Rectangle(x, y, width, height);
+	}
+	
+	public void destroy() {
+		this.img = null;
+		this.rect = new Rectangle(0,0,0,0);
+	}
+	
+	public Rectangle getRect() {
+		return rect;
 	}
 	
 	private int getRandX() {

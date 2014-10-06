@@ -1,3 +1,5 @@
+import java.awt.Rectangle;
+
 import javax.swing.ImageIcon;
 
 
@@ -31,6 +33,15 @@ public class LgCar extends Car {
 		width = img.getWidth(null);
 		height = img.getHeight(null);
 		
+	}
+	
+	public void move() {
+		if(startingX >= 0) {
+			x = x - speed;
+		} else {
+			x = x + speed;
+		}
+		rect = new Rectangle(x, y, width, height);
 	}
 	
 
