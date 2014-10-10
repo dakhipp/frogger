@@ -16,7 +16,7 @@ public class LgCar extends Car {
 			new ImageIcon("images/lgCarsRight/lgCar5.png"), new ImageIcon("images/lgCarsRight/lgCar6.png") 
 	};
 
-	public LgCar() {
+	public LgCar(int level) {
 		if (getX() > 0) {
 			img = super.randomImg(possibleImagesLeft);
 		} else {
@@ -24,6 +24,9 @@ public class LgCar extends Car {
 		}
 		width = img.getWidth(null);
 		height = img.getHeight(null);
+		this.level = level;
+		speed = 1;
+		setSpeed();	
 	}
 
 	protected void move() {
@@ -38,6 +41,16 @@ public class LgCar extends Car {
 		}
 		number++;
 		rect = new Rectangle(x, y, width, height);
+	}
+	
+	public void setSpeed() {
+		if(level > 3) {
+			speed = (speed + 1)/2;
+		} if ( level > 5) {
+			speed = (speed + 1)/2;
+		} if(speed > 9) {
+			speed = (speed + 1)/2;
+		}
 	}
 
 }

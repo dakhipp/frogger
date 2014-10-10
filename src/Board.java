@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -16,20 +17,25 @@ public class Board extends JPanel implements ActionListener {
 	private STATE State = STATE.MENU;
 
 	private Menu menu = new Menu();
+	private Hud hud = new Hud();
 	private Scores scores = new Scores();
 	private Controls controls = new Controls();
 	private Timer time;
 	private Image img;
 	private Player player = new Player();
-	private SmCarManager smCarManager = new SmCarManager(player.getLogsStart(), player.getLevel());
-	private LgCarManager lgCarManager = new LgCarManager(player.getLogsStart(), player.getLevel());
+	private SmCarManager smCarManager = new SmCarManager(player.getSmCarsStart());
+	private LgCarManager lgCarManager = new LgCarManager(player.getLgCarsStart());
 	private RiverRect river = new RiverRect(18, 95);
-	private LogManager logManager = new LogManager(player.getLogsStart(), player.getLevel());
+	private LogManager logManager = new LogManager(player.getLogsStart());
 	private WinningRect winningBank = new WinningRect(18, 40);
 	private Fly fly = new Fly();
 	private TreeManager treeManager = new TreeManager();
 	private Frog f = new Frog();
 	private MenuFrog menuFrog = new MenuFrog();
+//	private Rectangle upperRect = new Rectangle(18, 239, 540, 20);
+//	private Rectangle lowerRect = new Rectangle(18, 380, 540, 20);
+//	private Animal animalOne = new Animal(550,239);
+//	private Animal animalTwo = new Animal(18,380);
 
 	public Board() {
 		addKeyListener(new AL());
@@ -49,23 +55,33 @@ public class Board extends JPanel implements ActionListener {
 	public void paint(Graphics g) {
 		if (State == STATE.PLAY) {
 			removeTouchingObjects();
+			hud.setScoreString(player.getScore());
+			hud.setLevelString(player.getLevel());
+			hud.livesIcons(player.getLives());
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.drawImage(img, 0, 0, null);
 			logManager.paint(g);
-			fly.paint(g);
+			if(player.getLevel() != 1) {
+				fly.paint(g);
+			}
+//			animalOne.paint(g);
+//			animalTwo.paint(g);
 			winningBank.paint(g);
 			treeManager.paint(g);
 			f.paint(g);
 			river.paint(g);
 			smCarManager.paint(g);
 			lgCarManager.paint(g);
+			hud.paint(g);
 			frogCollisions();
 			repaint();
 		} else if (State == STATE.MENU) {
 			menu.render(g);
 			menuFrog.paint(g);
+			player.beginZeros();
 			if (menuFrog.getFinalPosition() == 1) {
 				State = STATE.PLAY;
+				f.resetFrog();
 				menuFrog.resetPosition();
 			} else if (menuFrog.getFinalPosition() == 2) {
 				State = STATE.CONTROLS;
@@ -199,7 +215,6 @@ public class Board extends JPanel implements ActionListener {
 
 	private void badHit() {
 		player.decreaseLives();
-		System.out.println("Lives: " + player.getLives());
 		f.resetFrog();
 		checkGameOver();
 	}
@@ -213,6 +228,10 @@ public class Board extends JPanel implements ActionListener {
 		}
 		if(player.getLevel() > 3) {
 			treeManager.spawnTrees(player.getLevel());
+			player.updateValues();
+			lgCarManager.updateValues(player.getLevel(), player.getLgCarsStart());
+			smCarManager.updateValues(player.getLevel(), player.getSmCarsStart());
+			logManager.updateValues(player.getLevel(), player.getLogsStart());
 		}
 		
 		fly.destroy();
@@ -221,23 +240,11 @@ public class Board extends JPanel implements ActionListener {
 		}
 		f.resetFrog();
 	}
+	
 
 	private void checkGameOver() {
 		if (player.getLives() < 0) {
 			endLevel();
-			
-			player.setHops(f.getHops());
-			player.setHopBonus();
-			player.addBonus();
-			System.out.println("Game Over!");
-			player.setHopBonus();
-			player.addBonus();
-			System.out.println("Final Score: " + player.getScore());
-			System.out.println("Final Level: " + player.getLevel());
-			System.out.println("Final Hops: " + player.getHops());
-			System.out.println("Hop Bonus: " + player.getHopBonus());
-			System.out.println("Flys Caught: " + player.getFlysCaught());
-
 			// check player for high scores
 			// show high scores
 			player.resetPlayer();

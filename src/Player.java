@@ -1,19 +1,23 @@
 public class Player {
 
 	private int score, level, lives, hops, flysCaught, hopBonus;
-	private int smCarsStart, lgCarsStart, logsStart, startTrees;
+	private int smCarsStart, lgCarsStart, logsStart, treesStart;
 
 	public Player() {
 		score = 0;
 		level = 1;
 		lives = 3;
 		hops = 0;
-		hopBonus = hops*5;
 		flysCaught = 0;
 		smCarsStart = 5;
 		lgCarsStart = 5;
 		logsStart = 10;
-		startTrees = 0;
+		treesStart = 0;
+	}
+	
+	public void updateValues() {
+		smCarsStart = smCarsStart + 2;
+		lgCarsStart = lgCarsStart + 2;
 	}
 
 	public int getHopBonus() {
@@ -34,14 +38,14 @@ public class Player {
 
 	public int getStartTrees() {
 		setTrees();
-		return startTrees;
+		return treesStart;
 	}
 
 	private void setTrees() {
 		if (level < 5) {
-			startTrees = 2;
+			treesStart = 2;
 		} else {
-			startTrees = 0;
+			treesStart = 0;
 		}
 	}
 
@@ -105,6 +109,12 @@ public class Player {
 		lives = 3;
 		hops = 0;
 		flysCaught = 0;
+	}
+	
+	public void beginZeros() {
+		hops = 0;
+		score = 0;
+		level = 1;
 	}
 
 	public void checkHighScore() {

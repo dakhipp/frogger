@@ -8,16 +8,16 @@ public class LogManager {
 	private int amount, level, spawnDelay;
 	private List<Log> logs = new ArrayList<Log>();
 
-	public LogManager(int amount, int level) {
+	public LogManager(int amount) {
 		this.spawnDelay = 400;
 		this.amount = amount;
-		this.level = level;
+		this.level = 1;
 	}
 
 	private void spawnLog() {
 		int size = logs.size();
 		if (size < amount) {
-			logs.add(new Log());
+			logs.add(new Log(level));
 		} else if (size > amount) {
 			logs.get(0);
 		}
@@ -31,9 +31,9 @@ public class LogManager {
 		}
 		
 		Random random = new Random();
-		if(spawnDelay > 600) {
+		if(spawnDelay > 700) {
 			spawnLog();
-			spawnDelay = random.nextInt(200 - 100) + 100;
+			spawnDelay = random.nextInt(300 - 100) + 100;
 		} else {
 			spawnDelay++;
 		}
@@ -55,4 +55,9 @@ public class LogManager {
 		return this.logs;
 	}
 
+	public void updateValues(int level, int amount) {
+		this.level = level;
+		this.amount = amount;
+	}
+	
 }

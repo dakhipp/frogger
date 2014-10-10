@@ -9,10 +9,13 @@ public class SmCar extends Car {
 			new ImageIcon("images/smCars/smCar5.png"), new ImageIcon("images/smCars/smCar6.png")
 	};
 
-	public SmCar() {
+	public SmCar(int level) {
 		img = super.randomImg(possibleImages);
 		width = img.getWidth(null);
 		height = img.getHeight(null);
+		this.level = level;
+		speed = 1;
+		setSpeed();
 	}
 
 	protected void move() {
@@ -27,6 +30,16 @@ public class SmCar extends Car {
 		}
 		number++;
 		rect = new Rectangle(x, y, width, height);
+	}
+	
+	public void setSpeed() {
+		if(level > 3) {
+			speed = (speed + 1)/2;
+		} if ( level > 5) {
+			speed = (speed + 1)/2;
+		} if(speed > 9) {
+			speed = (speed + 1)/2;
+		}
 	}
 
 }

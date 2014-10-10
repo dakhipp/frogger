@@ -8,15 +8,16 @@ public class SmCarManager {
 	private int amount, level, spawnDelay;
 	private List<SmCar> smCars = new ArrayList<SmCar>();
 
-	public SmCarManager(int amount, int level) {
-		this.spawnDelay = 500;
-		this.amount = level * amount;
+	public SmCarManager(int amount) {
+		this.spawnDelay = 400;
+		this.amount = amount;
+		this.level = 1;
 	}
 
 	private void spawn() {
 		int size = smCars.size();
 		if (size < amount) {
-			smCars.add(new SmCar());
+			smCars.add(new SmCar(level));
 		} else if (size > amount) {
 			smCars.get(0);
 		}
@@ -36,7 +37,7 @@ public class SmCarManager {
 		}
 		
 		Random random = new Random();
-		if(spawnDelay > 600) {
+		if(spawnDelay > 500) {
 			spawn();
 			spawnDelay = random.nextInt(200 - 100) + 100;
 		} else {
@@ -51,6 +52,11 @@ public class SmCarManager {
 
 	public List<SmCar> allSmCars() {
 		return this.smCars;
+	}
+	
+	public void updateValues(int level, int amount) {
+		this.level = level;
+		this.amount = amount;
 	}
 
 }

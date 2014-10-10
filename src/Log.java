@@ -1,15 +1,13 @@
 import java.awt.Rectangle;
-import java.util.Random;
 
 import javax.swing.ImageIcon;
 
 public class Log extends MovingEntity {
 
 	private int[] possibleYs = { 189, 95 };
-	private Rectangle bigRect;
 	private boolean goingRight;
 
-	public Log() {
+	public Log(int level) {
 		ImageIcon i = new ImageIcon("images/Log.png");
 		img = i.getImage();
 		x = getRandX(possibleXs);
@@ -19,7 +17,18 @@ public class Log extends MovingEntity {
 		isDead = false;
 		width = img.getWidth(null);
 		height = (img.getHeight(null) + 25);
+		setSpeed();
 		
+	}
+	
+	public void setSpeed() {
+		if(level > 3) {
+			speed = (speed + 1)/2;
+		} if ( level > 5) {
+			speed = (speed + 1)/2;
+		} if(speed > 9) {
+			speed = (speed + 1)/2;
+		}
 	}
 	
 	public boolean getGoingRight() {
@@ -58,5 +67,5 @@ public class Log extends MovingEntity {
 		}
 		return yVal;
 	}
-
+	
 }

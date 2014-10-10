@@ -4,7 +4,6 @@ import java.util.List;
 
 public class TreeManager {
 
-	private int treeAmount;
 	private List<Tree> trees = new ArrayList<Tree>();
 
 	public TreeManager() {
