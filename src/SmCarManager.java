@@ -10,8 +10,7 @@ public class SmCarManager {
 
 	public SmCarManager(int amount, int level) {
 		this.spawnDelay = 500;
-		this.amount = amount;
-		this.level = level;
+		this.amount = level * amount;
 	}
 
 	private void spawn() {

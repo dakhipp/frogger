@@ -13,8 +13,8 @@ public class LgCarManager {
 
 	public LgCarManager(int amount, int level) {
 		this.spawnDelay = 500;
-		this.amount = amount;
-		this.level = level;
+		this.amount = amount * level;
+//		this.level = level;
 	}
 
 //	private void spawn() {
@@ -41,7 +41,7 @@ public class LgCarManager {
 		if (size < amount) {
 			lgCars.add(new LgCar());
 		} else if (size > amount) {
-			lgCars.get(0);
+			lgCars.get(0).kill();
 		}
 	}
 	

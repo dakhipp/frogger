@@ -7,28 +7,28 @@ public class TreeManager {
 	private int treeAmount;
 	private List<Tree> trees = new ArrayList<Tree>();
 
-	public TreeManager(int amount) {
-		this.treeAmount = amount;
-		spawnTree();
+	public TreeManager() {
+		
 	}
 
-	public void spawnTree() {
-		int size = trees.size();
-		if (size < treeAmount) {
-			for (int i = 0; i < treeAmount - size; i++) {
+	public void spawnTrees(int level) {
+		int treeAmount = 0;
+		if(level > 3) {
+			treeAmount = 1 + (level-2);
+		}
+		if (trees.size() < treeAmount) {
+			for (int i = 0; i < treeAmount - trees.size(); i++) {
 				trees.add(new Tree());
 			}
-		} else if (size > treeAmount) {
-			for (int i = 0; i < size - treeAmount; i++) {
+		} else if (trees.size() > treeAmount) {
+			for (int i = 0; i < trees.size() - treeAmount; i++) {
 				trees.get(0);
 			}
 		}
 	}
 
 	public void destroyTrees() {
-		for (Tree tree : trees) {
-			trees.remove(tree);
-		}
+		trees.removeAll(trees);
 	}
 
 	public void paint(Graphics g) {

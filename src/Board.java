@@ -21,13 +21,13 @@ public class Board extends JPanel implements ActionListener {
 	private Timer time;
 	private Image img;
 	private Player player = new Player();
-	private SmCarManager smCarManager = new SmCarManager(player.getSmCarsStart(), player.getLevel());
-	private LgCarManager lgCarManager = new LgCarManager(player.getLgCarsStart(), player.getLevel());
+	private SmCarManager smCarManager = new SmCarManager(player.getLogsStart(), player.getLevel());
+	private LgCarManager lgCarManager = new LgCarManager(player.getLogsStart(), player.getLevel());
 	private RiverRect river = new RiverRect(18, 95);
 	private LogManager logManager = new LogManager(player.getLogsStart(), player.getLevel());
 	private WinningRect winningBank = new WinningRect(18, 40);
 	private Fly fly = new Fly();
-	private TreeManager treeManager = new TreeManager(player.getStartTrees());
+	private TreeManager treeManager = new TreeManager();
 	private Frog f = new Frog();
 	private MenuFrog menuFrog = new MenuFrog();
 
@@ -52,9 +52,6 @@ public class Board extends JPanel implements ActionListener {
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.drawImage(img, 0, 0, null);
 			logManager.paint(g);
-			if (fly.checkReset(player.getLevel())) {
-				fly.resetFly();
-			}
 			fly.paint(g);
 			winningBank.paint(g);
 			treeManager.paint(g);
@@ -69,15 +66,11 @@ public class Board extends JPanel implements ActionListener {
 			menuFrog.paint(g);
 			if (menuFrog.getFinalPosition() == 1) {
 				State = STATE.PLAY;
-				treeManager.spawnTree();
 				menuFrog.resetPosition();
-				f.resetFrog();
 			} else if (menuFrog.getFinalPosition() == 2) {
 				State = STATE.CONTROLS;
-				f.resetFrog();
 			} else if (menuFrog.getFinalPosition() == 3) {
 				State = STATE.SCORES;
-				f.resetFrog();
 			}
 		} else if (State == STATE.CONTROLS) {
 			controls.render(g);
@@ -96,7 +89,11 @@ public class Board extends JPanel implements ActionListener {
 
 	private class AL extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
+			int oldHops = f.getHops();
 			f.keyReleased(e);
+			if(oldHops < f.getHops()) {
+				player.increaseHop();
+			}
 			menuFrog.keyReleased(e);
 		}
 	}
@@ -145,13 +142,15 @@ public class Board extends JPanel implements ActionListener {
 			badHit();
 		} else if (checkOnLog()) {
 			f.moveWithLog(getLogSpeed());
+		} else if (f.getOffscreen()) {
+			badHit();
 		} else if (f.intersects(fly.getRect())) {
 			caughtFly();
 		} else if(f.intersects(river.getRect())) {
 			badHit();
 		} else if (f.intersects(winningBank.getRect())) {
-			winLevel();
-		}	
+			endLevel();
+		} 
 	}
 
 	private int getLogSpeed() {
@@ -180,9 +179,15 @@ public class Board extends JPanel implements ActionListener {
 
 	private ArrayList<Entity> dangerousObjects() {
 		ArrayList<Entity> hazards = new ArrayList<Entity>();
-		hazards.addAll(smCarManager.allSmCars());
-		hazards.addAll(lgCarManager.allLgCars());
-		hazards.addAll(treeManager.allTrees());
+		if(smCarManager.size() > 0) {
+			hazards.addAll(smCarManager.allSmCars());
+		}
+		if(lgCarManager.size() > 0) {
+			hazards.addAll(lgCarManager.allLgCars());
+		}
+		if(treeManager.treeSize() > 0) {	
+			hazards.addAll(treeManager.allTrees());
+		}
 		return hazards;
 	}
 
@@ -190,20 +195,6 @@ public class Board extends JPanel implements ActionListener {
 		player.increaseLives();
 		player.incraseScoreLevel();
 		fly.destroy();
-		System.out.println("Lives: " + player.getLives());
-		System.out.println("Score: " + player.getScore());
-	}
-
-	private void winLevel() {
-		player.increaseLevel();
-		player.incraseScoreLevel();
-		treeManager.destroyTrees();
-		f.resetFrog();
-		if (fly.checkReset(player.getLevel())) {
-			fly.resetFly();
-		}
-		System.out.println("Level: " + player.getLevel());
-		System.out.println("Score: " + player.getScore());
 	}
 
 	private void badHit() {
@@ -212,9 +203,29 @@ public class Board extends JPanel implements ActionListener {
 		f.resetFrog();
 		checkGameOver();
 	}
+	
+	private void endLevel() {
+		player.increaseLevel();
+		player.incraseScoreLevel();
+		
+		if(treeManager.treeSize() > 0) {
+			treeManager.destroyTrees();
+		}
+		if(player.getLevel() > 3) {
+			treeManager.spawnTrees(player.getLevel());
+		}
+		
+		fly.destroy();
+		if(player.getLevel() % 3 == 0) {
+			fly.resetFly();
+		}
+		f.resetFrog();
+	}
 
 	private void checkGameOver() {
 		if (player.getLives() < 0) {
+			endLevel();
+			
 			player.setHops(f.getHops());
 			player.setHopBonus();
 			player.addBonus();
@@ -224,13 +235,12 @@ public class Board extends JPanel implements ActionListener {
 			System.out.println("Final Score: " + player.getScore());
 			System.out.println("Final Level: " + player.getLevel());
 			System.out.println("Final Hops: " + player.getHops());
-			System.out.println("Hop Bonus: " + player.getHops());
+			System.out.println("Hop Bonus: " + player.getHopBonus());
 			System.out.println("Flys Caught: " + player.getFlysCaught());
 
 			// check player for high scores
 			// show high scores
-			treeManager.destroyTrees();
-			player.resetPlayer(); // PROBABLY MOVE THIS LATER
+			player.resetPlayer();
 			menuFrog.resetPosition();
 			State = STATE.MENU;
 		}

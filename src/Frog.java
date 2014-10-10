@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 public class Frog {
 
 	private int x, dx, y, dy, width, height, hops, number;
+	private boolean offScreen;
 	private Image frogImg;
 	private Rectangle rect;
 
@@ -21,6 +22,7 @@ public class Frog {
 		height = frogImg.getHeight(null);
 		hops = 0;
 		number = 0;
+		offScreen = false;
 	}
 
 	public void resetFrog() {
@@ -30,6 +32,7 @@ public class Frog {
 		y = 612;
 		width = frogImg.getWidth(null);
 		height = frogImg.getHeight(null);
+		offScreen = false;
 	}
 
 	public void paint(Graphics g) {
@@ -60,8 +63,17 @@ public class Frog {
 		number++;
 	}
 	
-	
+	public boolean getOffscreen() {
+		offScreenKill();
+		return offScreen;
+	}
 
+	protected void offScreenKill() {
+		if (x < -5 || x > 655) {
+			offScreen = true;
+		}
+	}
+	
 	public void move() {
 		if (dx != 0) {
 			x = x + dx;

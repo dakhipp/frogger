@@ -29,13 +29,6 @@ public class Fly extends Entity {
 		rect = new Rectangle(x, y, width, height);
 	}
 
-	public boolean checkReset(int level) {
-		if (level % 3 == 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	public void setFly() {
 		ImageIcon i = new ImageIcon("images/Butterfly.png");
@@ -45,6 +38,7 @@ public class Fly extends Entity {
 		width = img.getWidth(null);
 		height = img.getHeight(null);
 		rect = new Rectangle(x, y, width, height);
+	
 	}
 
 	public void destroy() {

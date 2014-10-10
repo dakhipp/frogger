@@ -8,7 +8,7 @@ public class Player {
 		level = 1;
 		lives = 3;
 		hops = 0;
-		hopBonus = 0;
+		hopBonus = hops*5;
 		flysCaught = 0;
 		smCarsStart = 5;
 		lgCarsStart = 5;
@@ -92,7 +92,7 @@ public class Player {
 
 	public void increaseHop() {
 		hops = hops + 1;
-		score = score + 10;
+		score = score + 5;
 	}
 
 	public int getHops() {

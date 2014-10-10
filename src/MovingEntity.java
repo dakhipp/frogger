@@ -32,7 +32,6 @@ public class MovingEntity extends Entity {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(this.getImage(), this.x, this.y, null);
 		rect = new Rectangle(x, y, width, height);
-		g.drawRect(this.x, this.y, this.width, this.height);
 	}
 
 	protected void move() {
