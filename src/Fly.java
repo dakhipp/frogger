@@ -5,8 +5,8 @@ import javax.swing.ImageIcon;
 
 public class Fly extends Entity {
 
-	private int[] possibleYs = { 518, 471 };// , 424, 330, 283, 189, 142, 95};
-											// //ADJUST FLY SPAWNING
+	private int[] possibleYs = { 518, 471, 424, 330, 283, 189, 142, 95};
+	
 	private Rectangle rect = new Rectangle();
 
 	public Fly() {

@@ -1,14 +1,17 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static enum STATE {
 		MENU, PLAY, CONTROLS, SCORES
@@ -32,10 +35,6 @@ public class Board extends JPanel implements ActionListener {
 	private TreeManager treeManager = new TreeManager();
 	private Frog f = new Frog();
 	private MenuFrog menuFrog = new MenuFrog();
-//	private Rectangle upperRect = new Rectangle(18, 239, 540, 20);
-//	private Rectangle lowerRect = new Rectangle(18, 380, 540, 20);
-//	private Animal animalOne = new Animal(550,239);
-//	private Animal animalTwo = new Animal(18,380);
 
 	public Board() {
 		addKeyListener(new AL());

@@ -7,6 +7,11 @@ import javax.swing.JPanel;
 
 public class Controls extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	ImageIcon i = new ImageIcon("images/controlsBg.png");
 	Image img = i.getImage();
 

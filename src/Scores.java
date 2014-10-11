@@ -7,6 +7,11 @@ import javax.swing.JPanel;
 
 public class Scores extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	ImageIcon i = new ImageIcon("images/scoresBg.png");
 	Image img = i.getImage();
 
